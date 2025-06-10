@@ -29,7 +29,7 @@ namespace FTK_MultiMax_Rework {
             if (ConfigHandler.MaxPlayersConfig != null) {
                 GameFlowMC.gMaxPlayers = ConfigHandler.MaxPlayersConfig.Value;
                 GameFlowMC.gMaxEnemies = GameFlowMC.gMaxPlayers;
-                uiQuickPlayerCreate.Default_Classes = new int[GameFlowMC.gMaxPlayers];
+                uiQuickPlayerCreate.Default_Classes = Enumerable.Repeat(0, GameFlowMC.gMaxPlayers).ToArray(); // Or any valid default class ID
             } else {
                 Debug.LogError("maxPlayersConfig is not initialized!");
             }
