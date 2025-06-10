@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Configuration;
 using Google2u;
 using HarmonyLib;
@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -118,7 +117,7 @@ namespace FTK_MultiMax_Rework {
                 List<CharacterOverworld> carrierPassengers = (List<CharacterOverworld>)carrierPassengersField.GetValue(__instance);
 
 
-                if (followCarrierField == null && __instance.m_HexLand.m_PlayersInHex.Count == 0) {
+                if (followCarrier == null && __instance.m_HexLand.m_PlayersInHex.Count == 0) {
                     __instance.gameObject.SetActive(value: false);
                     UnityEngine.Object.Destroy(__instance.gameObject);
                     return false;
@@ -161,7 +160,7 @@ namespace FTK_MultiMax_Rework {
             if (playerId < ReInput.players.playerCount) {
                 return true;
             }
-            __result = ReInput.players.GetPlayer(2);
+            __result = ReInput.players.GetPlayer(ReInput.players.playerCount - 1);
             return false;
         }
 
