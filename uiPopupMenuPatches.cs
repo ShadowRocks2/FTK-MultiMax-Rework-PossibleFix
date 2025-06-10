@@ -3,6 +3,8 @@ using Google2u;
 using HarmonyLib;
 using System.Linq;
 using UnityEngine;
+using static FTKInputFocus;
+using static uiPopupMenu;
 
 namespace FTK_MultiMax_Rework {
     public static class uiPopupMenuPatches {
