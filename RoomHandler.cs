@@ -7,7 +7,7 @@ using System.Text;
 namespace FTK_MultiMax_Rework {
     public static class RoomHandler {
         public static bool CreateRoom(ref GameLogic __instance, string _roomName, bool _isOpen) {
-            PhotonNetwork.OfflineMode = false;
+            PhotonNetwork.offlineMode = false;
 
             if (!PhotonNetwork.connectedAndReady) {
                 Debug.LogError("[MultiMax Rework] PhotonNetwork is not connected!");
