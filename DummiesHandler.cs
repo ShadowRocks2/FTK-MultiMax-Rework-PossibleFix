@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace FTK_MultiMax_Rework {
@@ -9,40 +8,49 @@ namespace FTK_MultiMax_Rework {
 
         public static void CreateDummies() {
             Debug.Log("MAKING DUMMIES");
+
+            if (FTKHub.Instance.m_Dummies.Length < 6) {
+                Debug.LogError("[MultiMaxRework] FTKHub.Instance.m_Dummies does not contain enough dummies!");
+                return;
+            }
+
             List<GameObject> dummies = new List<GameObject>();
+
             for (int j = 0; j < Mathf.Max(3, GameFlowMC.gMaxPlayers); j++) {
-                if (j < 3) {
-                    dummies.Add(FTKHub.Instance.m_Dummies[j]);
-                    continue;
-                }
-                GameObject copy2 = UnityEngine.Object.Instantiate(FTKHub.Instance.m_Dummies[2], FTKHub.Instance.m_Dummies[2].transform.parent);
-                copy2.name = "Player " + (j + 1) + " Dummy";
-                copy2.GetComponent<PhotonView>().viewID = 3245 + j;
-                dummies.Add(copy2);
+                dummies.Add(CreatePlayerDummy(FTKHub.Instance.m_Dummies, j));
             }
+
             for (int i = 0; i < Mathf.Max(3, GameFlowMC.gMaxEnemies); i++) {
-                if (i < 3) {
-                    dummies.Add(FTKHub.Instance.m_Dummies[i + 3]);
-                    continue;
-                }
-                GameObject copy = UnityEngine.Object.Instantiate(FTKHub.Instance.m_Dummies[5], FTKHub.Instance.m_Dummies[5].transform.parent);
-                copy.name = "Enemy " + (i + 1) + " Dummy";
-                copy.GetComponent<PhotonView>().viewID = 3045 + i;
-                dummies.Add(copy);
+                dummies.Add(CreateEnemyDummy(FTKHub.Instance.m_Dummies, i));
             }
+
             FTKHub.Instance.m_Dummies = dummies.ToArray();
-            GameObject[] dummies2 = FTKHub.Instance.m_Dummies;
+
             Debug.Log("MultiMax - Done");
         }
 
-        public static GameObject CreateDummy(GameObject[] source, int index, string prefix) {
+        private static GameObject CreatePlayerDummy(GameObject[] source, int index) {
             GameObject dummy;
             if (index < 3) {
                 dummy = source[index];
             } else {
                 dummy = UnityEngine.Object.Instantiate(source[2], source[2].transform.parent);
-                dummy.name = $"{prefix} {index + 1} Dummy";
-                dummy.GetComponent<PhotonView>().viewID = 3245 + index;
+                dummy.name = $"Player {index + 1} Dummy";
+                dummy.GetComponent<PhotonView>().viewID = 10000 + index; // safe dummy range
+                Debug.Log($"Created Player Dummy {index + 1}");
+            }
+            return dummy;
+        }
+
+        private static GameObject CreateEnemyDummy(GameObject[] source, int index) {
+            GameObject dummy;
+            if (index < 3) {
+                dummy = source[index + 3];
+            } else {
+                dummy = UnityEngine.Object.Instantiate(source[5], source[5].transform.parent);
+                dummy.name = $"Enemy {index + 1} Dummy";
+                dummy.GetComponent<PhotonView>().viewID = 20000 + index; // safe dummy range
+                Debug.Log($"Created Enemy Dummy {index + 1}");
             }
             return dummy;
         }
