@@ -3,6 +3,7 @@ using Photon; // depending on FTK's Photon version
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace FTK_MultiMax_Rework {
     public static class RoomHandler {
